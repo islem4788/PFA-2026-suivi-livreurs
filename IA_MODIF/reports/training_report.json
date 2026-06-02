@@ -1,0 +1,63 @@
+{
+  "train_accuracy": 0.9539473684210527,
+  "train_f1_macro": 0.953849490349165,
+  "train_auc": 0.9937575862666899,
+  "test_accuracy": 0.9,
+  "test_f1_macro": 0.899888765294772,
+  "test_f1_weighted": 0.899888765294772,
+  "test_auc": 0.96,
+  "gap_train_test_accuracy": 0.05394736842105263,
+  "cv_f1_macro_mean_baseline": 0.8245853363873387,
+  "cv_f1_macro_std_baseline": 0.08128314701581994,
+  "cv_f1_macro_best_tuned": 0.8173717161882795,
+  "cv_method": "GroupKFold + sample_weight=balanced + STRONG regularization",
+  "best_params": {
+    "subsample": 0.8,
+    "reg_lambda": 2.0,
+    "reg_alpha": 0.5,
+    "n_estimators": 100,
+    "min_child_weight": 5,
+    "max_depth": 3,
+    "learning_rate": 0.08,
+    "gamma": 0.5,
+    "colsample_bytree": 0.5
+  },
+  "regularization_strategy": "max_depth<=3, gamma>=0.5, min_child_weight>=5, reg_alpha>=0.3, reg_lambda>=2.0",
+  "classes": [
+    "AGGRESSIVE",
+    "NORMAL"
+  ],
+  "n_features": 58,
+  "n_train": 152,
+  "n_test": 30,
+  "n_groups_train": 33,
+  "confusion_matrix_test": [
+    [
+      13,
+      2
+    ],
+    [
+      1,
+      14
+    ]
+  ],
+  "confusion_matrix_train": [
+    [
+      76,
+      3
+    ],
+    [
+      4,
+      69
+    ]
+  ],
+  "pred_time_ms_batch": 2.620091000571847,
+  "pred_time_us_per_sample": 87.33636668572824,
+  "proba_distribution_test": {
+    "min": 0.024637877941131592,
+    "q25": 0.07505586743354797,
+    "median": 0.4769085943698883,
+    "q75": 0.9098459482192993,
+    "max": 0.9645941257476807
+  }
+}

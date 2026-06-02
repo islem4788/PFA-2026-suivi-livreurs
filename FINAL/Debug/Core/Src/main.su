@@ -1,0 +1,15 @@
+../Core/Src/main.c:130:13:Display_Init_Screen	24	static
+../Core/Src/main.c:154:13:Display_Header	16	static
+../Core/Src/main.c:163:13:Draw_SectionTitle	24	static
+../Core/Src/main.c:171:13:Draw_ValueRow	112	static
+../Core/Src/main.c:207:13:Display_DriveState	56	static
+../Core/Src/main.c:257:13:Display_IMU	56	static
+../Core/Src/main.c:281:19:Compute_State	48	static
+../Core/Src/main.c:309:13:Send_To_ESP32	104	static
+../Core/Src/main.c:322:5:main	56	static
+../Core/Src/main.c:455:6:SystemClock_Config	88	static
+../Core/Src/main.c:480:13:MX_I2C1_Init	8	static
+../Core/Src/main.c:496:13:MX_SPI5_Init	8	static
+../Core/Src/main.c:513:13:MX_USART1_UART_Init	8	static
+../Core/Src/main.c:526:13:MX_GPIO_Init	56	static
+../Core/Src/main.c:550:6:Error_Handler	4	static,ignoring_inline_asm

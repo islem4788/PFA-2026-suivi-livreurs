@@ -1,0 +1,12 @@
+../Core/Src/ili9341.c:212:13:LCD_SendCmd	16	static
+../Core/Src/ili9341.c:220:13:LCD_SendData8	16	static
+../Core/Src/ili9341.c:228:13:LCD_SendData16	24	static
+../Core/Src/ili9341.c:238:6:LCD_SetWindow	24	static
+../Core/Src/ili9341.c:252:6:LCD_Init	16	static
+../Core/Src/ili9341.c:356:6:LCD_FillScreen	24	static
+../Core/Src/ili9341.c:362:6:LCD_FillRect	32	static
+../Core/Src/ili9341.c:380:6:LCD_DrawChar	48	static
+../Core/Src/ili9341.c:403:6:LCD_DrawString	40	static
+../Core/Src/ili9341.c:418:6:LCD_DrawStringLarge	48	static
+../Core/Src/ili9341.c:450:6:LCD_DrawHLine	32	static
+../Core/Src/ili9341.c:456:6:LCD_DrawBar	56	static

@@ -1,0 +1,177 @@
+[
+  {
+    "model": "Logistic Regression",
+    "cv_f1_mean": 0.8070902463549523,
+    "cv_f1_std": 0.05517202375956477,
+    "train_accuracy": 0.9473684210526315,
+    "train_f1_macro": 0.9472222222222222,
+    "test_accuracy": 0.9,
+    "test_f1_macro": 0.899888765294772,
+    "test_f1_weight": 0.899888765294772,
+    "test_auc": 0.9555555555555556,
+    "gap_train_test": 0.047368421052631504,
+    "train_time_s": 5.603982400032692,
+    "pred_time_ms": 0.21876799990423024,
+    "pred_time_us_per_sample": 7.292266663474341,
+    "confusion_matrix": [
+      [
+        13,
+        2
+      ],
+      [
+        1,
+        14
+      ]
+    ]
+  },
+  {
+    "model": "K-Nearest Neighbors",
+    "cv_f1_mean": 0.8536574478470703,
+    "cv_f1_std": 0.09812354990015391,
+    "train_accuracy": 0.8947368421052632,
+    "train_f1_macro": 0.8947186147186147,
+    "test_accuracy": 0.8666666666666667,
+    "test_f1_macro": 0.8660714285714286,
+    "test_f1_weight": 0.8660714285714285,
+    "test_auc": 0.96,
+    "gap_train_test": 0.028070175438596467,
+    "train_time_s": 0.0003450000658631325,
+    "pred_time_ms": 9.33859399985522,
+    "pred_time_us_per_sample": 311.2864666618407,
+    "confusion_matrix": [
+      [
+        12,
+        3
+      ],
+      [
+        1,
+        14
+      ]
+    ]
+  },
+  {
+    "model": "SVM (RBF kernel)",
+    "cv_f1_mean": 0.8460210375673208,
+    "cv_f1_std": 0.03509304172153417,
+    "train_accuracy": 0.9605263157894737,
+    "train_f1_macro": 0.9604166666666667,
+    "test_accuracy": 0.8333333333333334,
+    "test_f1_macro": 0.8331479421579533,
+    "test_f1_weight": 0.8331479421579533,
+    "test_auc": 0.9511111111111112,
+    "gap_train_test": 0.1271929824561403,
+    "train_time_s": 0.010498299961909652,
+    "pred_time_ms": 0.601104999659583,
+    "pred_time_us_per_sample": 20.036833321986098,
+    "confusion_matrix": [
+      [
+        12,
+        3
+      ],
+      [
+        2,
+        13
+      ]
+    ]
+  },
+  {
+    "model": "Random Forest",
+    "cv_f1_mean": 0.8876536967749427,
+    "cv_f1_std": 0.06478614086354746,
+    "train_accuracy": 1.0,
+    "train_f1_macro": 1.0,
+    "test_accuracy": 0.8666666666666667,
+    "test_f1_macro": 0.8660714285714286,
+    "test_f1_weight": 0.8660714285714285,
+    "test_auc": 0.9733333333333334,
+    "gap_train_test": 0.1333333333333333,
+    "train_time_s": 0.3146370000904426,
+    "pred_time_ms": 74.93282999959774,
+    "pred_time_us_per_sample": 2497.7609999865913,
+    "confusion_matrix": [
+      [
+        14,
+        1
+      ],
+      [
+        3,
+        12
+      ]
+    ]
+  },
+  {
+    "model": "XGBoost",
+    "cv_f1_mean": 0.8662272862037307,
+    "cv_f1_std": 0.08329966820766276,
+    "train_accuracy": 0.9078947368421053,
+    "train_f1_macro": 0.9077509970521935,
+    "test_accuracy": 0.8666666666666667,
+    "test_f1_macro": 0.8660714285714286,
+    "test_f1_weight": 0.8660714285714285,
+    "test_auc": 0.9822222222222222,
+    "gap_train_test": 0.041228070175438614,
+    "train_time_s": 0.03532989998348057,
+    "pred_time_ms": 0.6041209993418306,
+    "pred_time_us_per_sample": 20.13736664472769,
+    "confusion_matrix": [
+      [
+        14,
+        1
+      ],
+      [
+        3,
+        12
+      ]
+    ]
+  },
+  {
+    "model": "LightGBM",
+    "cv_f1_mean": 0.8613861267476395,
+    "cv_f1_std": 0.10061692651959782,
+    "train_accuracy": 0.9868421052631579,
+    "train_f1_macro": 0.9868055555555556,
+    "test_accuracy": 0.8,
+    "test_f1_macro": 0.7963800904977376,
+    "test_f1_weight": 0.7963800904977376,
+    "test_auc": 0.9644444444444444,
+    "gap_train_test": 0.1868421052631578,
+    "train_time_s": 0.0228538999799639,
+    "pred_time_ms": 1.2039930000901222,
+    "pred_time_us_per_sample": 40.133100003004074,
+    "confusion_matrix": [
+      [
+        14,
+        1
+      ],
+      [
+        5,
+        10
+      ]
+    ]
+  },
+  {
+    "model": "MLP (neural net)",
+    "cv_f1_mean": 0.6861174215410417,
+    "cv_f1_std": 0.09642056989025176,
+    "train_accuracy": 0.756578947368421,
+    "train_f1_macro": 0.7564840874648192,
+    "test_accuracy": 0.8666666666666667,
+    "test_f1_macro": 0.8660714285714286,
+    "test_f1_weight": 0.8660714285714285,
+    "test_auc": 0.9422222222222223,
+    "gap_train_test": -0.11008771929824568,
+    "train_time_s": 0.080359400017187,
+    "pred_time_ms": 0.10335500002838671,
+    "pred_time_us_per_sample": 3.4451666676128903,
+    "confusion_matrix": [
+      [
+        12,
+        3
+      ],
+      [
+        1,
+        14
+      ]
+    ]
+  }
+]

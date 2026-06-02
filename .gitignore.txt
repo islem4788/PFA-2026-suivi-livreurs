@@ -1,0 +1,15 @@
+target/
+*.class
+*.jar
+node_modules/
+dist/
+.angular/
+__pycache__/
+*.pyc
+venv/
+.env
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

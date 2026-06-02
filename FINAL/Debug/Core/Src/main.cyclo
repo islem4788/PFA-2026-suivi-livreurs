@@ -1,0 +1,15 @@
+../Core/Src/main.c:130:13:Display_Init_Screen	2
+../Core/Src/main.c:154:13:Display_Header	1
+../Core/Src/main.c:163:13:Draw_SectionTitle	1
+../Core/Src/main.c:171:13:Draw_ValueRow	5
+../Core/Src/main.c:207:13:Display_DriveState	5
+../Core/Src/main.c:257:13:Display_IMU	1
+../Core/Src/main.c:281:19:Compute_State	9
+../Core/Src/main.c:309:13:Send_To_ESP32	1
+../Core/Src/main.c:322:5:main	16
+../Core/Src/main.c:455:6:SystemClock_Config	4
+../Core/Src/main.c:480:13:MX_I2C1_Init	4
+../Core/Src/main.c:496:13:MX_SPI5_Init	2
+../Core/Src/main.c:513:13:MX_USART1_UART_Init	2
+../Core/Src/main.c:526:13:MX_GPIO_Init	1
+../Core/Src/main.c:550:6:Error_Handler	1

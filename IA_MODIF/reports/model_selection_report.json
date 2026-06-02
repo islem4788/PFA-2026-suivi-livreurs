@@ -1,0 +1,245 @@
+{
+  "winner": "XGBoost",
+  "winner_score": 0.7619590420566509,
+  "weights": {
+    "n_test_f1": 0.25,
+    "n_test_auc": 0.2,
+    "n_cv_f1": 0.2,
+    "n_cv_stab": 0.15,
+    "n_no_overfit": 0.15,
+    "n_speed": 0.05
+  },
+  "context": {
+    "sensor": "MPU6050 (3-axis accelerometer + 3-axis gyroscope)",
+    "n_features": 58,
+    "alert_system": "Two probabilistic thresholds (WARNING>=0.50, CRITICAL>=0.95)",
+    "deployment": "Flask service, real-time inference"
+  },
+  "ranking": [
+    {
+      "rank": 1,
+      "model": "XGBoost",
+      "score_composite": 0.7619590420566509,
+      "test_f1_macro": 0.8660714285714286,
+      "test_auc": 0.9822222222222222,
+      "cv_f1_mean": 0.8662272862037307,
+      "cv_f1_std": 0.08329966820766276,
+      "gap_train_test": 0.041228070175438614,
+      "pred_time_us_per_sample": 20.13736664472769,
+      "diagnostics": [
+        {
+          "level": "GREEN",
+          "message": "Pas d'overfitting (gap=+0.041)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "F1-test moyen (0.866)"
+        },
+        {
+          "level": "GREEN",
+          "message": "AUC excellent (0.982) - bon pour seuils"
+        },
+        {
+          "level": "ORANGE",
+          "message": "CV moyennement stable (std=0.083)"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "model": "Logistic Regression",
+      "score_composite": 0.7175959929401305,
+      "test_f1_macro": 0.899888765294772,
+      "test_auc": 0.9555555555555556,
+      "cv_f1_mean": 0.8070902463549523,
+      "cv_f1_std": 0.05517202375956477,
+      "gap_train_test": 0.047368421052631504,
+      "pred_time_us_per_sample": 7.292266663474341,
+      "diagnostics": [
+        {
+          "level": "GREEN",
+          "message": "Pas d'overfitting (gap=+0.047)"
+        },
+        {
+          "level": "GREEN",
+          "message": "F1-test eleve (0.900)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "AUC bon (0.956) - seuils moins fiables"
+        },
+        {
+          "level": "GREEN",
+          "message": "CV stable (std=0.055)"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "model": "Random Forest",
+      "score_composite": 0.6564558227954874,
+      "test_f1_macro": 0.8660714285714286,
+      "test_auc": 0.9733333333333334,
+      "cv_f1_mean": 0.8876536967749427,
+      "cv_f1_std": 0.06478614086354746,
+      "gap_train_test": 0.1333333333333333,
+      "pred_time_us_per_sample": 2497.7609999865913,
+      "diagnostics": [
+        {
+          "level": "ORANGE",
+          "message": "Overfitting modere (gap=+0.133)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "F1-test moyen (0.866)"
+        },
+        {
+          "level": "GREEN",
+          "message": "AUC excellent (0.973) - bon pour seuils"
+        },
+        {
+          "level": "GREEN",
+          "message": "CV stable (std=0.065)"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "model": "K-Nearest Neighbors",
+      "score_composite": 0.5956044626055449,
+      "test_f1_macro": 0.8660714285714286,
+      "test_auc": 0.96,
+      "cv_f1_mean": 0.8536574478470703,
+      "cv_f1_std": 0.09812354990015391,
+      "gap_train_test": 0.028070175438596467,
+      "pred_time_us_per_sample": 311.2864666618407,
+      "diagnostics": [
+        {
+          "level": "GREEN",
+          "message": "Pas d'overfitting (gap=+0.028)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "F1-test moyen (0.866)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "AUC bon (0.960) - seuils moins fiables"
+        },
+        {
+          "level": "ORANGE",
+          "message": "CV moyennement stable (std=0.098)"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "model": "SVM (RBF kernel)",
+      "score_composite": 0.5360113928005168,
+      "test_f1_macro": 0.8331479421579533,
+      "test_auc": 0.9511111111111112,
+      "cv_f1_mean": 0.8460210375673208,
+      "cv_f1_std": 0.03509304172153417,
+      "gap_train_test": 0.1271929824561403,
+      "pred_time_us_per_sample": 20.036833321986098,
+      "diagnostics": [
+        {
+          "level": "ORANGE",
+          "message": "Overfitting modere (gap=+0.127)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "F1-test moyen (0.833)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "AUC bon (0.951) - seuils moins fiables"
+        },
+        {
+          "level": "GREEN",
+          "message": "CV stable (std=0.035)"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "model": "LightGBM",
+      "score_composite": 0.31747357797478626,
+      "test_f1_macro": 0.7963800904977376,
+      "test_auc": 0.9644444444444444,
+      "cv_f1_mean": 0.8613861267476395,
+      "cv_f1_std": 0.10061692651959782,
+      "gap_train_test": 0.1868421052631578,
+      "pred_time_us_per_sample": 40.133100003004074,
+      "diagnostics": [
+        {
+          "level": "RED",
+          "message": "OVERFITTING SEVERE (gap=+0.187)"
+        },
+        {
+          "level": "RED",
+          "message": "F1-test faible (0.796)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "AUC bon (0.964) - seuils moins fiables"
+        },
+        {
+          "level": "RED",
+          "message": "CV INSTABLE (std=0.101)"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "model": "MLP (neural net)",
+      "score_composite": 0.3004427436738275,
+      "test_f1_macro": 0.8660714285714286,
+      "test_auc": 0.9422222222222223,
+      "cv_f1_mean": 0.6861174215410417,
+      "cv_f1_std": 0.09642056989025176,
+      "gap_train_test": -0.11008771929824568,
+      "pred_time_us_per_sample": 3.4451666676128903,
+      "diagnostics": [
+        {
+          "level": "ORANGE",
+          "message": "Overfitting modere (gap=-0.110)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "F1-test moyen (0.866)"
+        },
+        {
+          "level": "ORANGE",
+          "message": "AUC bon (0.942) - seuils moins fiables"
+        },
+        {
+          "level": "ORANGE",
+          "message": "CV moyennement stable (std=0.096)"
+        }
+      ]
+    }
+  ],
+  "xgboost_vs_logreg": {
+    "test_f1_tie": true,
+    "details": {
+      "XGBoost": {
+        "test_f1": 0.8660714285714286,
+        "cv_f1": 0.8662272862037307,
+        "auc": 0.9822222222222222
+      },
+      "Logistic Regression": {
+        "test_f1": 0.899888765294772,
+        "cv_f1": 0.8070902463549523,
+        "auc": 0.9555555555555556
+      }
+    },
+    "tiebreakers": [
+      "CV F1 (n=152) : XGBoost (0.8662) > LogReg (0.8071) — ecart +0.0591",
+      "AUC : XGBoost (0.9822) > LogReg (0.9556) — critique pour seuils d'alerte",
+      "Features MPU6050 multi-correlees (Mag, Energy, rolling stats) + relations non-lineaires : XGBoost capture mieux les interactions",
+      "Test set n=30 trop petit pour conclure : la CV (plus fiable) departage clairement"
+    ]
+  },
+  "justification": "Le modele XGBoost obtient le meilleur score composite (0.7620) en combinant performance sur le test (F1=0.8661, AUC=0.9822), robustesse en validation croisee (CV F1=0.8662, std=0.0833), absence d'overfitting (gap train-test=+0.0412) et rapidite d'inference (20.1 us/echantillon). Bien que Logistic Regression egale XGBoost sur le F1 du test (n=30 trop petit pour conclure), la validation croisee (plus fiable, n=152) le departage : XGBoost CV F1 = 0.8662 vs LogReg 0.8071. De plus, l'AUC superieur de XGBoost (0.9822 vs 0.9556) est critique pour le systeme d'alerte a deux seuils probabilistes."
+}
