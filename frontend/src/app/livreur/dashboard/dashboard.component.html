@@ -1,0 +1,147 @@
+<div class="livreur-dashboard">
+
+  <header class="top-header">
+    <div class="user-info">
+      <div class="avatar">{{ auth.currentUser()?.firstName?.charAt(0) }}{{ auth.currentUser()?.lastName?.charAt(0) }}</div>
+      <div>
+        <div class="welcome">Bonjour</div>
+        <div class="name">{{ auth.currentUser()?.firstName }} {{ auth.currentUser()?.lastName }}</div>
+      </div>
+    </div>
+    <button class="signout-btn" (click)="signout()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+  </header>
+
+  @if (auth.currentUser()?.livreurId; as code) {
+    <div class="code-card">
+      <div class="code-info">
+        <div class="code-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span>Mon code livreur</span>
+        </div>
+        <div class="code-value">{{ code }}</div>
+        <div class="code-hint">Communiquez ce code à votre responsable pour rejoindre son équipe</div>
+      </div>
+      <button class="copy-btn" (click)="copyCode(code)" [class.copied]="codeCopied()">
+        @if (codeCopied()) {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5"/>
+          </svg>
+        } @else {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        }
+      </button>
+    </div>
+  }
+
+  <div class="state-card" [style.background]="getStateColor()">
+    <div class="state-pulse"></div>
+    <div class="state-label">État de conduite</div>
+    <div class="state-value">{{ getStateLabel() }}</div>
+    <div class="state-message">{{ getStateMessage() }}</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-block">
+      <div class="stat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M3 17l6-6 4 4 8-8M14 7h7v7" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ speed().toFixed(0) }}</div>
+        <div class="stat-unit">km/h</div>
+      </div>
+      <div class="stat-label">Vitesse actuelle</div>
+    </div>
+
+    <div class="stat-block">
+      <div class="stat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <polyline points="12 6 12 12 16 14" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value time">{{ uptime() }}</div>
+      </div>
+      <div class="stat-label">Temps en service</div>
+    </div>
+  </div>
+
+  <div class="position-card">
+    <div class="card-title">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span>Ma position</span>
+      @if (isTracking()) {
+        <span class="live-indicator">
+          <span class="live-dot"></span>
+          LIVE
+        </span>
+      }
+    </div>
+
+    @if (gpsError()) {
+      <div class="gps-error">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/>
+          <line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <div>
+          <strong>{{ gpsError() }}</strong>
+          <p>Activez la géolocalisation pour utiliser l'app</p>
+        </div>
+      </div>
+    } @else if (position()) {
+      <div class="coords">
+        <div class="coord-row">
+          <span class="coord-label">Latitude</span>
+          <span class="coord-value">{{ position()!.latitude.toFixed(6) }}</span>
+        </div>
+        <div class="coord-row">
+          <span class="coord-label">Longitude</span>
+          <span class="coord-value">{{ position()!.longitude.toFixed(6) }}</span>
+        </div>
+        <div class="coord-row">
+          <span class="coord-label">Précision</span>
+          <span class="coord-value">±{{ position()!.accuracy.toFixed(0) }}m</span>
+        </div>
+      </div>
+    } @else {
+      <div class="loading-coords">
+        <div class="spinner-mini"></div>
+        <span>Recherche du signal GPS...</span>
+      </div>
+    }
+  </div>
+
+  <button class="report-btn" (click)="goToSignaler()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" stroke="currentColor" stroke-width="2.5"/>
+    </svg>
+    <div class="report-text">
+      <strong>Signaler un incident</strong>
+      <small>Trafic, accident, route bloquée</small>
+    </div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </button>
+
+  <div class="footer">
+    <p>OINSExpress — PFA 2026</p>
+  </div>
+</div>

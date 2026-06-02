@@ -1,0 +1,66 @@
+<div class="alertes-page">
+  <header class="page-header">
+    <a routerLink="/boss/map" class="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </a>
+    <div>
+      <h1>Alertes</h1>
+      <p>Gérez les anomalies détectées</p>
+    </div>
+  </header>
+
+  <div class="filters">
+    <button [class.active]="filter() === 'unresolved'" (click)="setFilter('unresolved')">
+      Non résolues
+    </button>
+    <button [class.active]="filter() === 'resolved'" (click)="setFilter('resolved')">
+      Résolues
+    </button>
+    <button [class.active]="filter() === 'all'" (click)="setFilter('all')">
+      Toutes
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+    </div>
+  } @else if (filteredAlerts().length === 0) {
+    <div class="empty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+        <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="#10B981" stroke-width="2"/>
+      </svg>
+      <h3>Aucune alerte</h3>
+      <p>Tout fonctionne normalement</p>
+    </div>
+  } @else {
+    <div class="alerts-list">
+      @for (alert of filteredAlerts(); track alert.id) {
+        <div class="alert-card" [class.resolved]="alert.resolved" [class]="getSeverityClass(alert.severity)">
+          <div class="alert-icon">{{ getAlertIcon(alert.type) }}</div>
+          <div class="alert-body">
+            <div class="alert-top">
+              <span class="alert-type">{{ getAlertLabel(alert.type) }}</span>
+              <span class="alert-time">{{ alert.createdAt | date:'short' }}</span>
+            </div>
+            <div class="alert-livreur">{{ alert.livreurName }}</div>
+            <div class="alert-message">{{ alert.message }}</div>
+          </div>
+          <div class="alert-actions">
+            <button class="btn-icon" (click)="goToMap(alert)" title="Voir sur la carte">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+            @if (!alert.resolved) {
+              <button class="btn-resolve" (click)="resolveAlert(alert)">Résoudre</button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

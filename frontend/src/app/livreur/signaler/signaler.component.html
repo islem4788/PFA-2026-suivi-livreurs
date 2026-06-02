@@ -1,0 +1,83 @@
+<div class="signaler-page">
+  <header class="page-header">
+    <a routerLink="/livreur/dashboard" class="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </a>
+    <h1>Signaler un incident</h1>
+  </header>
+
+  @if (success()) {
+    <div class="success-card fade-in">
+      <div class="success-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+          <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="white" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <h2>Signalement envoyé !</h2>
+      <p>Merci pour votre contribution</p>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="section">
+        <label class="section-label">Type d'incident</label>
+        <div class="types-grid">
+          @for (t of types; track t.id) {
+            <button
+              type="button"
+              class="type-btn"
+              [class.selected]="isSelected(t.id)"
+              (click)="selectType(t.id)">
+              <div class="type-icon" [style.background]="t.color + '22'">
+                {{ t.icon }}
+              </div>
+              <span>{{ t.label }}</span>
+            </button>
+          }
+        </div>
+        @if (hasError('type', 'required')) {
+          <div class="form-error">Sélectionnez un type d'incident</div>
+        }
+      </div>
+
+      <div class="section">
+        <label class="section-label">Description</label>
+        <textarea
+          class="form-textarea"
+          placeholder="Décrivez la situation (au moins 10 caractères)..."
+          formControlName="description"
+          rows="4"></textarea>
+        @if (hasError('description', 'required')) {
+          <div class="form-error">Description requise</div>
+        }
+        @if (hasError('description', 'minlength')) {
+          <div class="form-error">Minimum 10 caractères</div>
+        }
+      </div>
+
+      <div class="info-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>Votre position GPS sera automatiquement attachée au signalement</span>
+      </div>
+
+      @if (error()) {
+        <div class="alert-error">{{ error() }}</div>
+      }
+
+      <button type="submit" class="submit-btn" [disabled]="loading()">
+        @if (loading()) {
+          <span class="spinner"></span>
+        } @else {
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span>Envoyer le signalement</span>
+        }
+      </button>
+    </form>
+  }
+</div>

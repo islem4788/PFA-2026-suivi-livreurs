@@ -1,0 +1,151 @@
+.welcome-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #DBEAFE 0%, #FFFFFF 100%);
+}
+
+.welcome-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 48px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(30, 64, 175, 0.15);
+  text-align: center;
+}
+
+.logo-section {
+  margin-bottom: 40px;
+}
+
+.logo {
+  width: 96px;
+  height: 96px;
+  background: #1E40AF;
+  border-radius: 24px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3);
+}
+
+.brand-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2E2E2E;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.brand-tagline {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-primary {
+  background: #1E40AF;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+}
+.btn-primary:hover {
+  background: #1E3A8A;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.4);
+}
+
+.btn-secondary {
+  background: white;
+  color: #1E40AF;
+  border: 2px solid #1E40AF;
+}
+.btn-secondary:hover {
+  background: #DBEAFE;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 16px;
+  color: #888;
+  font-size: 13px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #E5E5E5;
+}
+
+.btn-link {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.btn-link:hover {
+  background: #F5F5F5;
+  color: #1E40AF;
+}
+
+.footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #F0F0F0;
+}
+.footer p {
+  font-size: 12px;
+  color: #B0B0B0;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .welcome-card {
+    padding: 32px 24px;
+  }
+  .brand-name {
+    font-size: 26px;
+  }
+}

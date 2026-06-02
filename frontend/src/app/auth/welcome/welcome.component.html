@@ -1,0 +1,45 @@
+<div class="welcome-container fade-in">
+  <div class="welcome-card">
+
+    <div class="logo-section">
+      <div class="logo">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="white"/>
+        </svg>
+      </div>
+      <h1 class="brand-name">OINSExpress</h1>
+      <p class="brand-tagline">Supervision intelligente<br>de vos livraisons</p>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn-primary btn-full" (click)="goToSignin()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Se connecter</span>
+      </button>
+
+      <button class="btn-secondary btn-full" (click)="goToSignup()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m18-7a3 3 0 100-6 3 3 0 000 6zM23 21v-2a4 4 0 00-3-3.87M19 7v6m3-3h-6" stroke="#1E40AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Créer un compte</span>
+      </button>
+    </div>
+
+    <div class="divider">
+      <span>ou</span>
+    </div>
+
+    <button class="btn-link" (click)="goToClient()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Espace client — Donner un avis</span>
+    </button>
+
+    <div class="footer">
+      <p>PFA 2026 — FST</p>
+    </div>
+  </div>
+</div>

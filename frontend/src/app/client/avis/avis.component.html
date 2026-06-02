@@ -1,0 +1,133 @@
+<div class="client-page fade-in">
+  <a routerLink="/welcome" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    Retour
+  </a>
+
+  <div class="client-card">
+    @if (success()) {
+      <div class="success-state">
+        <div class="success-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="white" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <h2>Merci pour votre retour !</h2>
+        <p>Votre avis a été enregistré et sera examiné par notre équipe.</p>
+        <div class="action-buttons">
+          <button class="btn-secondary" (click)="newFeedback()">Nouveau retour</button>
+          <a routerLink="/welcome" class="btn-primary">Retour à l'accueil</a>
+        </div>
+      </div>
+    } @else {
+      <div class="header">
+        <div class="logo-mini">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="white"/>
+          </svg>
+        </div>
+        <h1>Espace client</h1>
+        <p>Donnez votre avis sur votre livraison</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label class="form-label">Numéro de colis</label>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="EX: PKG-202604-001"
+            formControlName="packageId">
+          @if (hasError('packageId', 'required')) {
+            <div class="form-error">Numéro requis</div>
+          }
+          @if (hasError('packageId', 'pattern')) {
+            <div class="form-error">Format invalide (lettres, chiffres et tirets)</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Votre nom complet</label>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Prénom Nom"
+            formControlName="clientName">
+          @if (hasError('clientName', 'required')) {
+            <div class="form-error">Nom requis</div>
+          }
+          @if (hasError('clientName', 'minlength')) {
+            <div class="form-error">Minimum 3 caractères</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Adresse de livraison</label>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Avenue Habib Bourguiba, Tunis"
+            formControlName="clientAddress">
+          @if (hasError('clientAddress', 'required')) {
+            <div class="form-error">Adresse requise</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Note (optionnel)</label>
+          <div class="rating">
+            @for (star of [1,2,3,4,5]; track star) {
+              <button
+                type="button"
+                class="star-btn"
+                [class.active]="rating() >= star"
+                (click)="setRating(star)">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Votre commentaire</label>
+          <textarea
+            class="form-textarea"
+            placeholder="Décrivez votre expérience avec le livreur..."
+            formControlName="comment"
+            rows="5"></textarea>
+          @if (hasError('comment', 'required')) {
+            <div class="form-error">Commentaire requis</div>
+          }
+          @if (hasError('comment', 'minlength')) {
+            <div class="form-error">Minimum 10 caractères</div>
+          }
+        </div>
+
+        <div class="info-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="16" x2="12" y2="12" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="8" x2="12.01" y2="8" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span>Vos commentaires aident à améliorer la qualité du service</span>
+        </div>
+
+        @if (error()) {
+          <div class="alert-error">{{ error() }}</div>
+        }
+
+        <button type="submit" class="submit-btn" [disabled]="loading()">
+          @if (loading()) {
+            <span class="spinner"></span>
+          } @else {
+            <span>Envoyer mon avis</span>
+          }
+        </button>
+      </form>
+    }
+  </div>
+</div>

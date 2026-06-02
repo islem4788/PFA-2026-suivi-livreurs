@@ -1,0 +1,206 @@
+<div class="boss-layout">
+
+  <header class="top-header">
+    <div class="header-left">
+      <div class="logo-mini">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="white"/>
+        </svg>
+      </div>
+      <h1>OINSExpress</h1>
+    </div>
+
+    <div class="header-center">
+      <span class="page-title">Live Tracking</span>
+    </div>
+
+    <div class="header-right">
+
+      <!-- Alertes -->
+      <button class="header-btn" (click)="goToAlerts()" title="Alertes">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        @if (unreadAlerts() > 0) {
+          <span class="badge">{{ unreadAlerts() }}</span>
+        }
+      </button>
+
+      <!-- Livreurs -->
+      <button class="header-btn" (click)="goToList()" title="Livreurs">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+
+      <!-- Avis clients -->
+      <button class="header-btn" (click)="goToAvisClients()" title="Avis clients">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- ✅ Classement IA — bouton séparé -->
+      <button class="header-btn" (click)="goToScoring()" title="Classement IA">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="user-menu">
+        <span class="user-name">{{ auth.currentUser()?.firstName }}</span>
+        <button class="header-btn" (click)="signout()" title="Déconnexion">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-blue">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ totalLivreurs() }}</div>
+        <div class="stat-label">Livreurs total</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-green">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ activeLivreurs() }}</div>
+        <div class="stat-label">En activité</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-icon-red">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ alertCount() }}</div>
+        <div class="stat-label">Alertes actives</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-container">
+    <div id="boss-map"></div>
+
+    @if (selectedLivreur(); as l) {
+      <div class="livreur-panel fade-in">
+        <button class="panel-close" (click)="closePanel()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+
+        <div class="panel-header">
+          <div class="avatar" [style.background]="getStatusColor(l.drivingState, l.status)">
+            {{ l.firstName.charAt(0) }}{{ l.lastName.charAt(0) }}
+          </div>
+          <div>
+            <div class="panel-name">{{ l.firstName }} {{ l.lastName }}</div>
+            <div class="panel-id">{{ l.livreurId }}</div>
+          </div>
+        </div>
+
+        <div class="status-pill" [style.background]="getStatusColor(l.drivingState, l.status)">
+          {{ translateStatus(l.status) }}
+        </div>
+
+        <div class="panel-info">
+          <div class="info-row">
+            <div class="info-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Vitesse
+            </div>
+            <div class="info-value">{{ l.speed.toFixed(0) }} km/h</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Position
+            </div>
+            <div class="info-value">{{ l.latitude.toFixed(4) }}, {{ l.longitude.toFixed(4) }}</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <polyline points="12 6 12 12 16 14" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Dernière MAJ
+            </div>
+            <div class="info-value">{{ l.lastUpdate | date:'HH:mm:ss' }}</div>
+          </div>
+        </div>
+
+        <div class="imu-section">
+          <div class="section-title">MPU6050</div>
+          <div class="imu-grid">
+            <div class="imu-cell">
+              <span>AccX</span>
+              <strong>{{ formatSensor(l.accX) }}</strong>
+            </div>
+            <div class="imu-cell">
+              <span>AccY</span>
+              <strong>{{ formatSensor(l.accY) }}</strong>
+            </div>
+            <div class="imu-cell">
+              <span>AccZ</span>
+              <strong>{{ formatSensor(l.accZ) }}</strong>
+            </div>
+            <div class="imu-cell">
+              <span>GyrX</span>
+              <strong>{{ formatSensor(l.gyrX, 2) }}</strong>
+            </div>
+            <div class="imu-cell">
+              <span>GyrY</span>
+              <strong>{{ formatSensor(l.gyrY, 2) }}</strong>
+            </div>
+            <div class="imu-cell">
+              <span>GyrZ</span>
+              <strong>{{ formatSensor(l.gyrZ, 2) }}</strong>
+            </div>
+          </div>
+        </div>
+
+        @if (l.status === 'ALERT') {
+          <div class="alert-banner">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <div>
+              <strong>Anomalie détectée</strong><br>
+              Cliquez pour voir les détails de l'alerte
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

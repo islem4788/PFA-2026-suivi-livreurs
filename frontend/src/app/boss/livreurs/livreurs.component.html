@@ -1,0 +1,230 @@
+<div class="livreurs-page">
+
+  <header class="page-header">
+    <a routerLink="/boss/map" class="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </a>
+    <div class="header-text">
+      <h1>Mes livreurs</h1>
+      <p>{{ filtered().length }} livreur(s) dans votre équipe</p>
+    </div>
+    <button class="add-btn" (click)="openAddModal()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span>Ajouter</span>
+    </button>
+  </header>
+
+  <div class="search-box">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+      <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <input
+      type="text"
+      placeholder="Rechercher par nom ou code..."
+      [value]="search()"
+      (input)="onSearch($any($event.target).value)">
+  </div>
+
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+    </div>
+  } @else if (livreurs().length === 0) {
+    <div class="empty-state">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#1E40AF" stroke-width="1.5"/>
+      </svg>
+      <h3>Aucun livreur dans votre équipe</h3>
+      <p>Demandez à vos livreurs leur code <strong>LIV-XXX</strong> et ajoutez-les ci-dessous</p>
+      <button class="btn-primary-cta" (click)="openAddModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2.5"/>
+        </svg>
+        Ajouter mon premier livreur
+      </button>
+    </div>
+  } @else if (filtered().length === 0) {
+    <div class="empty-state">
+      <p>Aucun livreur ne correspond à votre recherche</p>
+    </div>
+  } @else {
+    <div class="livreurs-grid">
+      @for (l of filtered(); track l.id) {
+        <div class="livreur-card" [class.inactive]="!l.active">
+          <div class="card-header">
+            <div class="avatar" [style.background]="getStatusColor(l)">
+              {{ l.firstName.charAt(0) }}{{ l.lastName.charAt(0) }}
+            </div>
+            <div class="card-name">
+              <strong>{{ l.firstName }} {{ l.lastName }}</strong>
+              <small class="livreur-code">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                  <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                {{ l.livreurId }}
+              </small>
+            </div>
+            <span class="status-dot" [style.background]="getStatusColor(l)"></span>
+          </div>
+
+          <div class="card-status" [style.color]="getStatusColor(l)">
+            {{ getStatusLabel(l) }}
+          </div>
+
+          @if (getPosition(l.livreurId); as pos) {
+            <div class="card-info">
+              <div class="info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>{{ pos.speed.toFixed(0) }} km/h</span>
+              </div>
+              @if (pos.lastUpdate) {
+                <div class="info-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <polyline points="12 6 12 12 16 14" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span>{{ pos.lastUpdate | date:'HH:mm' }}</span>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="card-info-empty">
+              <span>Aucune activité GPS</span>
+            </div>
+          }
+
+          <div class="card-actions">
+            <button class="btn-action btn-view" (click)="goToMap(l)" [disabled]="!l.active">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Voir
+            </button>
+            <button class="btn-action btn-remove" (click)="confirmRemove(l)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Retirer
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Modal d'ajout -->
+  @if (showAddModal()) {
+    <div class="modal-overlay" (click)="closeAddModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="modal-close" (click)="closeAddModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+
+        <div class="modal-header">
+          <div class="modal-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m18-7a3 3 0 100-6 3 3 0 000 6zM23 21v-2a4 4 0 00-3-3.87M19 7v6m3-3h-6" stroke="white" stroke-width="2"/>
+            </svg>
+          </div>
+          <h2>Ajouter un livreur</h2>
+          <p>Saisissez le code unique de votre livreur</p>
+        </div>
+
+        <form [formGroup]="addForm" (ngSubmit)="submitAdd()" class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Code livreur</label>
+            <input
+              type="text"
+              class="form-input code-input"
+              placeholder="LIV-001"
+              formControlName="code"
+              autocomplete="off"
+              autofocus>
+            @if (hasError('code', 'required')) {
+              <div class="form-error">Code requis</div>
+            }
+            @if (hasError('code', 'pattern')) {
+              <div class="form-error">Format : LIV-XXX (ex: LIV-001)</div>
+            }
+          </div>
+
+          <div class="info-tip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="16" x2="12" y2="12" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="8" x2="12.01" y2="8" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>Demandez son code à votre livreur. Il l'a vu lors de son inscription.</span>
+          </div>
+
+          @if (addError()) {
+            <div class="alert-error">{{ addError() }}</div>
+          }
+          @if (addSuccess()) {
+            <div class="alert-success">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              {{ addSuccess() }}
+            </div>
+          }
+
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="closeAddModal()">Annuler</button>
+            <button type="submit" class="btn-confirm" [disabled]="adding()">
+              @if (adding()) {
+                <span class="spinner-mini"></span>
+              } @else {
+                <span>Ajouter</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Modal confirmation retrait -->
+  @if (livreurToRemove(); as l) {
+    <div class="modal-overlay" (click)="cancelRemove()">
+      <div class="modal-content modal-danger" (click)="$event.stopPropagation()">
+        <div class="danger-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" stroke="white" stroke-width="2"/>
+          </svg>
+        </div>
+
+        <h2>Retirer ce livreur ?</h2>
+        <p class="danger-text">
+          <strong>{{ l.firstName }} {{ l.lastName }}</strong> sera retiré de votre équipe et
+          <strong>perdra l'accès à l'application</strong>.
+        </p>
+        <p class="danger-subtext">
+          Cette action peut être annulée en l'ajoutant à nouveau via son code <code>{{ l.livreurId }}</code>.
+        </p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="cancelRemove()">Annuler</button>
+          <button type="button" class="btn-danger" (click)="doRemove()" [disabled]="removing()">
+            @if (removing()) {
+              <span class="spinner-mini"></span>
+            } @else {
+              <span>Confirmer le retrait</span>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

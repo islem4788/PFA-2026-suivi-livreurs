@@ -1,0 +1,221 @@
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #DBEAFE 0%, #FFFFFF 100%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.back-link {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #888;
+  font-size: 14px;
+  padding: 12px;
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+.back-link:hover { color: #1E40AF; }
+
+.auth-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(30, 64, 175, 0.12);
+  margin: auto;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.email-icon-bg {
+  width: 64px;
+  height: 64px;
+  background: #1E40AF;
+  border-radius: 16px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2E2E2E;
+  margin: 0 0 6px;
+}
+
+.header-section p {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+}
+
+.email-display {
+  font-weight: 600;
+  color: #1E40AF !important;
+  margin-top: 4px !important;
+}
+
+.livreur-code-box {
+  background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+  border: 2px solid #93C5FD;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.code-box-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1E3A8A;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.code-box-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1E3A8A;
+  font-family: 'Inter', monospace;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+
+.code-box-hint {
+  font-size: 11px;
+  color: #1E40AF;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4A4A4A;
+  margin-bottom: 8px;
+}
+
+.code-input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #E5E5E5;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  font-family: 'Inter', monospace;
+  text-align: center;
+  letter-spacing: 8px;
+  background: #FAFAFA;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+.code-input:focus {
+  outline: none;
+  border-color: #1E40AF;
+  background: #FFF;
+  box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+}
+
+.form-error {
+  color: #EF4444;
+  font-size: 12px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.alert-error, .alert-success {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.alert-error {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+.alert-success {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.btn-primary {
+  background: #1E40AF;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+.btn-primary:hover:not(:disabled) {
+  background: #1E3A8A;
+}
+.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+.btn-full { width: 100%; }
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.resend-section {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #F0F0F0;
+}
+.resend-section p {
+  color: #888;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+.btn-link {
+  background: transparent;
+  border: none;
+  color: #1E40AF;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.btn-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.resend-disabled {
+  color: #B0B0B0;
+  font-size: 14px;
+}

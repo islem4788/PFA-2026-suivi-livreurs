@@ -1,0 +1,100 @@
+/* ═══════════════════════════════════════════════════════════════
+   OINSExpress — Global Styles
+   Charte: Bleu marine #1E3A8A + Blanc + Gris
+   Inspiration: iTrack (interface professionnelle de tracking)
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Couleurs principales — palette bleue */
+  --oins-blue: #1E40AF;
+  --oins-blue-dark: #1E3A8A;
+  --oins-blue-darker: #172554;
+  --oins-blue-vivid: #2563EB;
+  --oins-blue-light: #DBEAFE;
+  --oins-blue-50: #EFF6FF;
+  --oins-blue-100: #BFDBFE;
+  --oins-blue-200: #93C5FD;
+  --oins-blue-400: #60A5FA;
+  --oins-blue-600: #2563EB;
+  --oins-blue-700: #1D4ED8;
+
+  --oins-black: #111827;
+  --oins-dark: #1F2937;
+  --oins-gray-900: #111827;
+  --oins-gray-800: #1F2937;
+  --oins-gray-700: #374151;
+  --oins-gray-600: #4B5563;
+  --oins-gray-500: #6B7280;
+  --oins-gray-400: #9CA3AF;
+  --oins-gray-300: #D1D5DB;
+  --oins-gray-200: #E5E7EB;
+  --oins-gray-100: #F3F4F6;
+  --oins-gray-50: #F9FAFB;
+  --oins-white: #FFFFFF;
+
+  --oins-success: #10B981;
+  --oins-success-light: #D1FAE5;
+  --oins-warning: #F59E0B;
+  --oins-warning-light: #FEF3C7;
+  --oins-danger: #EF4444;
+  --oins-danger-light: #FEE2E2;
+  --oins-info: #3B82F6;
+  --oins-info-light: #DBEAFE;
+
+  --oins-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --oins-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --oins-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --oins-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --oins-shadow-blue: 0 4px 12px rgba(30, 64, 175, 0.25);
+  --oins-shadow-blue-lg: 0 12px 32px rgba(30, 64, 175, 0.18);
+
+  --oins-radius-sm: 6px;
+  --oins-radius-md: 10px;
+  --oins-radius-lg: 14px;
+  --oins-radius-xl: 20px;
+  --oins-radius-full: 9999px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--oins-font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--oins-gray-900);
+  background: var(--oins-gray-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--oins-gray-900);
+}
+
+a { color: var(--oins-blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 0.4s ease-out; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes pulseRipple {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--oins-gray-100); }
+::-webkit-scrollbar-thumb { background: var(--oins-gray-300); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--oins-gray-500); }

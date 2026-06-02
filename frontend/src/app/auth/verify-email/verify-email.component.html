@@ -1,0 +1,85 @@
+<div class="auth-container fade-in">
+  <a routerLink="/signup" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Retour
+  </a>
+
+  <div class="auth-card">
+    <div class="header-section">
+      <div class="email-icon-bg">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="white" stroke-width="2"/>
+          <path d="M22 6l-10 7L2 6" stroke="white" stroke-width="2"/>
+        </svg>
+      </div>
+      <h1>Vérification email</h1>
+      <p>Entrez le code à 6 chiffres envoyé à</p>
+      <p class="email-display">{{ email() }}</p>
+    </div>
+
+    @if (livreurId(); as code) {
+      <div class="livreur-code-box">
+        <div class="code-box-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Votre code livreur
+        </div>
+        <div class="code-box-value">{{ code }}</div>
+        <div class="code-box-hint">⚠️ Notez bien ce code — vous en aurez besoin pour rejoindre l'équipe de votre responsable</div>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="form-label">Code de vérification</label>
+        <input
+          type="text"
+          class="form-input code-input"
+          placeholder="000000"
+          formControlName="code"
+          maxlength="6"
+          inputmode="numeric"
+          autocomplete="one-time-code">
+        @if (hasError('code', 'required')) {
+          <div class="form-error">Code requis</div>
+        }
+        @if (hasError('code', 'pattern')) {
+          <div class="form-error">Le code doit contenir 6 chiffres</div>
+        }
+      </div>
+
+      @if (error()) {
+        <div class="alert-error">{{ error() }}</div>
+      }
+      @if (success()) {
+        <div class="alert-success">{{ success() }}</div>
+      }
+
+      <button type="submit" class="btn-primary btn-full" [disabled]="loading()">
+        @if (loading()) {
+          <span class="spinner"></span>
+        } @else {
+          <span>Vérifier</span>
+        }
+      </button>
+    </form>
+
+    <div class="resend-section">
+      <p>Vous n'avez pas reçu le code ?</p>
+      @if (countdown() > 0) {
+        <span class="resend-disabled">Renvoyer dans {{ countdown() }}s</span>
+      } @else {
+        <button class="btn-link" (click)="resend()" [disabled]="resending()">
+          @if (resending()) {
+            Envoi...
+          } @else {
+            Renvoyer le code
+          }
+        </button>
+      }
+    </div>
+  </div>
+</div>

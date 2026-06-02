@@ -1,0 +1,261 @@
+<div class="avis-page">
+
+  <header class="page-header">
+    <a routerLink="/boss/map" class="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </a>
+    <div class="header-text">
+      <h1>Avis clients</h1>
+      <p>Retours et commentaires de vos clients</p>
+    </div>
+    <button class="refresh-btn" (click)="load()" [disabled]="loading()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" [class.rotating]="loading()">
+        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Statistiques -->
+  <div class="stats-row">
+    <div class="stat-card stat-total">
+      <div class="stat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ total() }}</div>
+        <div class="stat-label">Total avis</div>
+      </div>
+    </div>
+
+    <div class="stat-card stat-rating">
+      <div class="stat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ averageRating() ? averageRating().toFixed(1) : '—' }}</div>
+        <div class="stat-label">Note moyenne</div>
+      </div>
+    </div>
+
+    <div class="stat-card stat-positive">
+      <div class="stat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ positiveCount() }}</div>
+        <div class="stat-label">Satisfaits</div>
+      </div>
+    </div>
+
+    <div class="stat-card stat-negative">
+      <div class="stat-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3zM17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ negativeCount() }}</div>
+        <div class="stat-label">Plaintes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recherche & Filtres -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+        <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <input
+        type="text"
+        placeholder="Rechercher par client, colis ou commentaire..."
+        [value]="search()"
+        (input)="onSearchChange($any($event.target).value)">
+    </div>
+
+    <div class="rating-filters">
+      <button
+        class="filter-btn"
+        [class.active]="isFilterActive(null)"
+        (click)="setFilterRating(null)">
+        Toutes
+      </button>
+      @for (r of [5, 4, 3, 2, 1]; track r) {
+        <button
+          class="filter-btn star-filter"
+          [class.active]="isFilterActive(r)"
+          (click)="setFilterRating(r)">
+          <span>{{ r }}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Contenu -->
+  @if (loading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <span>Chargement des avis...</span>
+    </div>
+  } @else if (error()) {
+    <div class="empty-state error-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#EF4444" stroke-width="2"/>
+        <line x1="12" y1="8" x2="12" y2="12" stroke="#EF4444" stroke-width="2"/>
+        <line x1="12" y1="16" x2="12.01" y2="16" stroke="#EF4444" stroke-width="2"/>
+      </svg>
+      <h3>Erreur</h3>
+      <p>{{ error() }}</p>
+      <button class="btn-retry" (click)="load()">Réessayer</button>
+    </div>
+  } @else if (filtered().length === 0) {
+    <div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#1E40AF" stroke-width="2"/>
+      </svg>
+      <h3>Aucun avis</h3>
+      <p>{{ feedbacks().length === 0 ? 'Aucun client n\'a encore laissé d\'avis' : 'Aucun avis ne correspond à votre recherche' }}</p>
+    </div>
+  } @else {
+    <div class="feedbacks-list">
+      @for (f of filtered(); track f.id) {
+        <article
+          class="feedback-card"
+          [class.positive]="isPositive(f)"
+          [class.negative]="isNegative(f)"
+          (click)="openDetails(f)">
+
+          <header class="card-header">
+            <div class="client-info">
+              <div class="avatar" [style.background]="getRatingColor(f.rating)">
+                {{ f.clientName.charAt(0).toUpperCase() }}
+              </div>
+              <div>
+                <div class="client-name">{{ f.clientName }}</div>
+                <div class="package-id">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  {{ f.packageId }}
+                </div>
+              </div>
+            </div>
+
+            <div class="rating-badge" [style.background]="getRatingColor(f.rating) + '15'" [style.color]="getRatingColor(f.rating)">
+              @if (f.rating) {
+                <div class="stars-mini">
+                  @for (s of [1,2,3,4,5]; track s) {
+                    <svg width="12" height="12" viewBox="0 0 24 24" [attr.fill]="f.rating >= s ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  }
+                </div>
+                <span class="rating-text">{{ getRatingLabel(f.rating) }}</span>
+              } @else {
+                <span class="rating-text">Sans note</span>
+              }
+            </div>
+          </header>
+
+          <div class="address">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>{{ f.clientAddress }}</span>
+          </div>
+
+          <p class="comment">{{ truncate(f.comment) }}</p>
+
+          <footer class="card-footer">
+            <span class="date">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <polyline points="12 6 12 12 16 14" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              {{ f.createdAt | date:'dd MMM yyyy, HH:mm' }}
+            </span>
+            <span class="read-more">Voir détails →</span>
+          </footer>
+        </article>
+      }
+    </div>
+  }
+
+  <!-- Modal détails -->
+  @if (selectedFeedback(); as f) {
+    <div class="modal-overlay" (click)="closeDetails()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="modal-close" (click)="closeDetails()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+
+        <div class="modal-header">
+          <div class="avatar-big" [style.background]="getRatingColor(f.rating)">
+            {{ f.clientName.charAt(0).toUpperCase() }}
+          </div>
+          <h2>{{ f.clientName }}</h2>
+          <span class="modal-package">Colis : {{ f.packageId }}</span>
+        </div>
+
+        <div class="modal-body">
+          @if (f.rating) {
+            <div class="modal-rating">
+              <div class="stars-big">
+                @for (s of [1,2,3,4,5]; track s) {
+                  <svg width="28" height="28" viewBox="0 0 24 24" [attr.fill]="f.rating >= s ? '#FBBF24' : 'none'" stroke="#FBBF24" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                }
+              </div>
+              <div class="rating-label-big" [style.color]="getRatingColor(f.rating)">
+                {{ getRatingLabel(f.rating) }}
+              </div>
+            </div>
+          }
+
+          <div class="info-row-modal">
+            <span class="info-label-modal">Adresse de livraison</span>
+            <span class="info-value-modal">{{ f.clientAddress }}</span>
+          </div>
+
+          <div class="info-row-modal">
+            <span class="info-label-modal">Date de l'avis</span>
+            <span class="info-value-modal">{{ f.createdAt | date:'full' }}</span>
+          </div>
+
+          <div class="comment-section">
+            <div class="comment-label">Commentaire complet</div>
+            <p class="comment-full">{{ f.comment }}</p>
+          </div>
+
+          @if (isNegative(f)) {
+            <div class="alert-warning">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" stroke="#EF4444" stroke-width="2"/>
+              </svg>
+              <div>
+                <strong>Avis négatif détecté</strong>
+                <p>Ce client n'est pas satisfait. Une action est recommandée.</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>
