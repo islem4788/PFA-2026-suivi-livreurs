@@ -13,3 +13,12 @@ venv/
 *.iml
 .DS_Store
 Thumbs.db
+FINAL/Debug/
+FINAL/.metadata/
+*.o
+*.d
+*.su
+*.cyclo
+*.elf
+*.map
+*.list
